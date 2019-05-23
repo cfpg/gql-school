@@ -106,3 +106,5 @@ query {
   }
 }
 ```
+
+11. Created an Apollo app which can be run using `node index.js`
