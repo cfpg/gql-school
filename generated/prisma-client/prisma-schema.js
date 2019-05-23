@@ -3,7 +3,15 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateUser {
+/* GraphQL */ `type AggregateStudent {
+  count: Int!
+}
+
+type AggregateTeacher {
+  count: Int!
+}
+
+type AggregateUser {
   count: Int!
 }
 
@@ -14,6 +22,18 @@ type BatchPayload {
 scalar Long
 
 type Mutation {
+  createStudent(data: StudentCreateInput!): Student!
+  updateStudent(data: StudentUpdateInput!, where: StudentWhereUniqueInput!): Student
+  updateManyStudents(data: StudentUpdateManyMutationInput!, where: StudentWhereInput): BatchPayload!
+  upsertStudent(where: StudentWhereUniqueInput!, create: StudentCreateInput!, update: StudentUpdateInput!): Student!
+  deleteStudent(where: StudentWhereUniqueInput!): Student
+  deleteManyStudents(where: StudentWhereInput): BatchPayload!
+  createTeacher(data: TeacherCreateInput!): Teacher!
+  updateTeacher(data: TeacherUpdateInput!, where: TeacherWhereUniqueInput!): Teacher
+  updateManyTeachers(data: TeacherUpdateManyMutationInput!, where: TeacherWhereInput): BatchPayload!
+  upsertTeacher(where: TeacherWhereUniqueInput!, create: TeacherCreateInput!, update: TeacherUpdateInput!): Teacher!
+  deleteTeacher(where: TeacherWhereUniqueInput!): Teacher
+  deleteManyTeachers(where: TeacherWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -40,14 +60,388 @@ type PageInfo {
 }
 
 type Query {
+  student(where: StudentWhereUniqueInput!): Student
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student]!
+  studentsConnection(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StudentConnection!
+  teacher(where: TeacherWhereUniqueInput!): Teacher
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher]!
+  teachersConnection(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeacherConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Student {
+  id: ID!
+  name: String!
+  teachers(where: TeacherWhereInput, orderBy: TeacherOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Teacher!]
+}
+
+type StudentConnection {
+  pageInfo: PageInfo!
+  edges: [StudentEdge]!
+  aggregate: AggregateStudent!
+}
+
+input StudentCreateInput {
+  id: ID
+  name: String!
+  teachers: TeacherCreateManyWithoutStudentsInput
+}
+
+input StudentCreateManyWithoutTeachersInput {
+  create: [StudentCreateWithoutTeachersInput!]
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentCreateWithoutTeachersInput {
+  id: ID
+  name: String!
+}
+
+type StudentEdge {
+  node: Student!
+  cursor: String!
+}
+
+enum StudentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type StudentPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input StudentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [StudentScalarWhereInput!]
+  OR: [StudentScalarWhereInput!]
+  NOT: [StudentScalarWhereInput!]
+}
+
+type StudentSubscriptionPayload {
+  mutation: MutationType!
+  node: Student
+  updatedFields: [String!]
+  previousValues: StudentPreviousValues
+}
+
+input StudentSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: StudentWhereInput
+  AND: [StudentSubscriptionWhereInput!]
+  OR: [StudentSubscriptionWhereInput!]
+  NOT: [StudentSubscriptionWhereInput!]
+}
+
+input StudentUpdateInput {
+  name: String
+  teachers: TeacherUpdateManyWithoutStudentsInput
+}
+
+input StudentUpdateManyDataInput {
+  name: String
+}
+
+input StudentUpdateManyMutationInput {
+  name: String
+}
+
+input StudentUpdateManyWithoutTeachersInput {
+  create: [StudentCreateWithoutTeachersInput!]
+  delete: [StudentWhereUniqueInput!]
+  connect: [StudentWhereUniqueInput!]
+  set: [StudentWhereUniqueInput!]
+  disconnect: [StudentWhereUniqueInput!]
+  update: [StudentUpdateWithWhereUniqueWithoutTeachersInput!]
+  upsert: [StudentUpsertWithWhereUniqueWithoutTeachersInput!]
+  deleteMany: [StudentScalarWhereInput!]
+  updateMany: [StudentUpdateManyWithWhereNestedInput!]
+}
+
+input StudentUpdateManyWithWhereNestedInput {
+  where: StudentScalarWhereInput!
+  data: StudentUpdateManyDataInput!
+}
+
+input StudentUpdateWithoutTeachersDataInput {
+  name: String
+}
+
+input StudentUpdateWithWhereUniqueWithoutTeachersInput {
+  where: StudentWhereUniqueInput!
+  data: StudentUpdateWithoutTeachersDataInput!
+}
+
+input StudentUpsertWithWhereUniqueWithoutTeachersInput {
+  where: StudentWhereUniqueInput!
+  update: StudentUpdateWithoutTeachersDataInput!
+  create: StudentCreateWithoutTeachersInput!
+}
+
+input StudentWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  teachers_every: TeacherWhereInput
+  teachers_some: TeacherWhereInput
+  teachers_none: TeacherWhereInput
+  AND: [StudentWhereInput!]
+  OR: [StudentWhereInput!]
+  NOT: [StudentWhereInput!]
+}
+
+input StudentWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  student(where: StudentSubscriptionWhereInput): StudentSubscriptionPayload
+  teacher(where: TeacherSubscriptionWhereInput): TeacherSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Teacher {
+  id: ID!
+  name: String!
+  students(where: StudentWhereInput, orderBy: StudentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Student!]
+}
+
+type TeacherConnection {
+  pageInfo: PageInfo!
+  edges: [TeacherEdge]!
+  aggregate: AggregateTeacher!
+}
+
+input TeacherCreateInput {
+  id: ID
+  name: String!
+  students: StudentCreateManyWithoutTeachersInput
+}
+
+input TeacherCreateManyWithoutStudentsInput {
+  create: [TeacherCreateWithoutStudentsInput!]
+  connect: [TeacherWhereUniqueInput!]
+}
+
+input TeacherCreateWithoutStudentsInput {
+  id: ID
+  name: String!
+}
+
+type TeacherEdge {
+  node: Teacher!
+  cursor: String!
+}
+
+enum TeacherOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type TeacherPreviousValues {
+  id: ID!
+  name: String!
+}
+
+input TeacherScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [TeacherScalarWhereInput!]
+  OR: [TeacherScalarWhereInput!]
+  NOT: [TeacherScalarWhereInput!]
+}
+
+type TeacherSubscriptionPayload {
+  mutation: MutationType!
+  node: Teacher
+  updatedFields: [String!]
+  previousValues: TeacherPreviousValues
+}
+
+input TeacherSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TeacherWhereInput
+  AND: [TeacherSubscriptionWhereInput!]
+  OR: [TeacherSubscriptionWhereInput!]
+  NOT: [TeacherSubscriptionWhereInput!]
+}
+
+input TeacherUpdateInput {
+  name: String
+  students: StudentUpdateManyWithoutTeachersInput
+}
+
+input TeacherUpdateManyDataInput {
+  name: String
+}
+
+input TeacherUpdateManyMutationInput {
+  name: String
+}
+
+input TeacherUpdateManyWithoutStudentsInput {
+  create: [TeacherCreateWithoutStudentsInput!]
+  delete: [TeacherWhereUniqueInput!]
+  connect: [TeacherWhereUniqueInput!]
+  set: [TeacherWhereUniqueInput!]
+  disconnect: [TeacherWhereUniqueInput!]
+  update: [TeacherUpdateWithWhereUniqueWithoutStudentsInput!]
+  upsert: [TeacherUpsertWithWhereUniqueWithoutStudentsInput!]
+  deleteMany: [TeacherScalarWhereInput!]
+  updateMany: [TeacherUpdateManyWithWhereNestedInput!]
+}
+
+input TeacherUpdateManyWithWhereNestedInput {
+  where: TeacherScalarWhereInput!
+  data: TeacherUpdateManyDataInput!
+}
+
+input TeacherUpdateWithoutStudentsDataInput {
+  name: String
+}
+
+input TeacherUpdateWithWhereUniqueWithoutStudentsInput {
+  where: TeacherWhereUniqueInput!
+  data: TeacherUpdateWithoutStudentsDataInput!
+}
+
+input TeacherUpsertWithWhereUniqueWithoutStudentsInput {
+  where: TeacherWhereUniqueInput!
+  update: TeacherUpdateWithoutStudentsDataInput!
+  create: TeacherCreateWithoutStudentsInput!
+}
+
+input TeacherWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  students_every: StudentWhereInput
+  students_some: StudentWhereInput
+  students_none: StudentWhereInput
+  AND: [TeacherWhereInput!]
+  OR: [TeacherWhereInput!]
+  NOT: [TeacherWhereInput!]
+}
+
+input TeacherWhereUniqueInput {
+  id: ID
 }
 
 type User {

@@ -2,3 +2,15 @@ type User {
   id: ID! @id
   name: String!
 }
+
+type Student {
+  id: ID! @id
+  name: String!
+  teachers: [Teacher!]! @relation(name: "TeacherStudent")
+}
+
+type Teacher {
+  id: ID! @id
+  name: String!
+  students: [Student!]! @relation(name: "TeacherStudent")
+}
