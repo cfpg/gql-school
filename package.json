@@ -12,7 +12,7 @@
     "react-router-dom": "^5.0.1"
   },
   "scripts": {
-    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./src",
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "codegen": "graphql-codegen --config codegen.yml"
   },
