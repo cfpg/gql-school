@@ -26,34 +26,14 @@ const AppLayout = function({ children, history }) {
             <Icon type="user" />
             <span>Home</span>
           </Menu.Item>
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="user" />
-                <span>Teacher</span>
-              </span>
-            }
-          >
-            <Menu.Item key="3" href="/teachers">
-              All Teachers
-            </Menu.Item>
-            <Menu.Item key="4">Add Teacher</Menu.Item>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="user" />
-                <span>Students</span>
-              </span>
-            }
-          >
-            <Menu.Item key="5" href="/students">
-              All Students
-            </Menu.Item>
-            <Menu.Item key="6">Add Student</Menu.Item>
-          </SubMenu>
+          <Menu.Item key="2" href="/teachers">
+            <Icon type="user" />
+            <span>Teachers</span>
+          </Menu.Item>
+          <Menu.Item key="3" href="/students">
+            <Icon type="user" />
+            <span>Students</span>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout>

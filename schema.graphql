@@ -16,6 +16,7 @@ type Teacher {
 
 input StudentWhereInput {
   id: ID
+  name: String
 }
 
 input TeacherWhereUniqueInput {
