@@ -1,36 +1,15 @@
 const { ApolloServer } = require("apollo-server");
-
+const { importSchema } = require("graphql-import");
+const { makeExecutableSchema } = require("graphql-tools");
+const path = require("path");
 const { prisma } = require("./generated/prisma-client");
 
 // Import schema using Prisma Datamodel
-const typeDefs = gql`
-  type Query {
-    students: [Student]
-    teachers: [Teacher]
-  }
-
-  type Student {
-    id: ID!
-    name: String!
-  }
-
-  type Teacher {
-    id: ID!
-    name: String!
-  }
-
-  type Mutation {
-    createStudent(name: String!): Student!
-    createTeacher(name: String!): Teacher!
-    updateTeacherAndConnectStudent(where: {id: ID!}, data: {students: {connect: {id: ID!}}})
-  }
-`;
-
-// Create a Resolver to
+const typeDefs = importSchema(path.join(__dirname, "./schema.graphql"));
 const resolvers = {
   Query: {
     students: (parent, args, ctx, info) => ctx.prisma.students(),
-    teachers: (parent, args, tx, info) => ctx.prisma.teachers()
+    teachers: (parent, args, ctx, info) => ctx.prisma.teachers()
   },
 
   Mutation: {
@@ -56,10 +35,10 @@ const resolvers = {
     }
   }
 };
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   context: async ({ req }) => {
     return { prisma };
   }

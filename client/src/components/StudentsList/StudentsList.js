@@ -21,10 +21,9 @@ export default function StudentsList() {
 
         return (
           <div className="StudentsList">
-            <h2>Students</h2>
             <ul>
               {data.students.map(student => {
-                return <li>{student.name}</li>;
+                return <li key={student.id}>{student.name}</li>;
               })}
             </ul>
           </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import "./App.css";
+import "./App.scss";
 
 // Main Deps
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -14,7 +14,7 @@ import TeachersContainer from "./containers/TeachersContainer";
 
 function App() {
   const apolloClient = new ApolloClient({
-    uri: "http://localhost:4466" // 4000(?)
+    uri: "http://localhost:4141"
   });
 
   return (

@@ -1,0 +1,45 @@
+type Query {
+  students: [Student]!
+  teachers: [Teacher]!
+}
+
+type Student {
+  id: ID!
+  name: String!
+}
+
+type Teacher {
+  id: ID!
+  name: String!
+  students(where: StudentWhereInput): [Student!]
+}
+
+input StudentWhereInput {
+  id: ID
+}
+
+input TeacherWhereUniqueInput {
+  id: ID
+}
+
+input TeacherUpdateInput {
+  name: String
+  students: StudentUpdateManyWithoutTeachersInput
+}
+
+input StudentUpdateManyWithoutTeachersInput {
+  connect: [StudentWhereUniqueInput!]
+}
+
+input StudentWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createStudent(name: String!): Student!
+  createTeacher(name: String!): Teacher!
+  updateTeacherAndConnectStudent(
+    where: TeacherWhereUniqueInput!
+    data: TeacherUpdateInput!
+  ): Teacher!
+}

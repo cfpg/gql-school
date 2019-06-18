@@ -24,19 +24,19 @@ export default function TeachersList() {
 
         return (
           <div className="TeachersList">
-            <h2>Teachers</h2>
             <ul>
               {data.teachers.map(teacher => {
                 return (
-                  <li>
+                  <li key={teacher.id}>
                     {teacher.name}
                     <ul>
-                      <li>
+                      <li key="title">
                         <strong>Students:</strong>
                       </li>
-                      {teacher.students.map(student => {
-                        return <li>{student.name}</li>;
-                      })}
+                      {teacher.students !== null &&
+                        teacher.students.map(student => {
+                          return <li key={student.id}>{student.name}</li>;
+                        })}
                     </ul>
                   </li>
                 );
