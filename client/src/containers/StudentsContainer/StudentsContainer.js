@@ -1,6 +1,7 @@
 import React from "react";
 
 import StudentsList from "../../components/StudentsList";
+import AddStudentForm from "../../components/AddStudentForm";
 
 export default function StudentsContainer() {
   return (
@@ -8,6 +9,7 @@ export default function StudentsContainer() {
       <h1>Students</h1>
 
       <StudentsList />
+      <AddStudentForm />
     </div>
   );
 }

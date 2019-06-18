@@ -26,7 +26,7 @@ const resolvers = {
   Mutation: {
     createStudent: (parent, args, ctx) => {
       return ctx.prisma.createStudent({
-        data: { name: args.name }
+        name: args.name
       });
     },
     createTeacher: (parent, args, ctx) => {
