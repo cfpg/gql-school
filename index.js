@@ -20,7 +20,7 @@ const resolvers = {
     },
     createTeacher: (parent, args, ctx) => {
       return ctx.prisma.createTeacher({
-        data: { name: args.name }
+        name: args.name
       });
     },
     updateTeacherAndConnectStudent: (parent, args, ctx) => {

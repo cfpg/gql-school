@@ -9,7 +9,6 @@ const AppLayout = function({ children, history }) {
   const [collapsed, setCollapsed] = useState(false);
 
   const onClick = ({ item }) => {
-    console.log(item);
     history.push(item.props.href);
   };
 
@@ -50,10 +49,10 @@ const AppLayout = function({ children, history }) {
               </span>
             }
           >
-            <Menu.Item key="3" href="/students">
+            <Menu.Item key="5" href="/students">
               All Students
             </Menu.Item>
-            <Menu.Item key="4">Add Student</Menu.Item>
+            <Menu.Item key="6">Add Student</Menu.Item>
           </SubMenu>
         </Menu>
       </Sider>

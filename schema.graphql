@@ -22,6 +22,11 @@ input TeacherWhereUniqueInput {
   id: ID
 }
 
+input TeacherCreateInput {
+  id: ID
+  name: String!
+}
+
 input TeacherUpdateInput {
   name: String
   students: StudentUpdateManyWithoutTeachersInput
@@ -33,6 +38,11 @@ input StudentUpdateManyWithoutTeachersInput {
 
 input StudentWhereUniqueInput {
   id: ID
+}
+
+input StudentCreateInput {
+  id: ID
+  name: String!
 }
 
 type Mutation {
