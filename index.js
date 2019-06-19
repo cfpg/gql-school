@@ -37,10 +37,10 @@ const resolvers = {
     updateTeacherAndConnectStudent: (parent, args, ctx) => {
       return ctx.prisma.updateTeacher({
         where: {
-          id: args.id
+          id: args.where.id
         },
         data: {
-          students: { connect: [{ id: args.studentId }] }
+          students: { connect: [{ id: args.data.students.connect.id }] }
         }
       });
     }
