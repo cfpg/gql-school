@@ -3,7 +3,7 @@ import { importSchema } from "graphql-import";
 import * as path from "path";
 import { prisma } from "./generated/prisma-client";
 
-import { QueryResolvers } from "./generated/graphql";
+import { QueryResolvers, MutationResolvers } from "./generated/graphql";
 const Query: QueryResolvers = {
   students: (parent, args, ctx, info) => ctx.prisma.students(),
   teachers: (parent, args, ctx, info) => {
@@ -19,12 +19,35 @@ const Query: QueryResolvers = {
       `);
   }
 };
+const Mutation: MutationResolvers = {
+  createStudent: (parent, args, ctx) => {
+    return ctx.prisma.createStudent({
+      name: args.name
+    });
+  },
+  createTeacher: (parent, args, ctx) => {
+    return ctx.prisma.createTeacher({
+      name: args.name
+    });
+  },
+  updateTeacherAndConnectStudent: (parent, args, ctx) => {
+    return ctx.prisma.updateTeacher({
+      where: {
+        id: args.id
+      },
+      data: {
+        students: { connect: [{ id: args.studentId }] }
+      }
+    });
+  }
+};
 
 const typeDefs = importSchema(path.join(__dirname, "./schema.graphql"));
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers: {
-    Query
+    Query,
+    Mutation
   }
 });
 
