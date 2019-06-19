@@ -4,18 +4,17 @@
   "description": "1. Create a prisma instace with a new psql database \\    `prisma init` 2. Run `docker-compose up` then `prisma deploy` to create the default server 3. Create a user with the following mutation:",
   "main": "index.js",
   "dependencies": {
-    "antd": "^3.19.5",
     "apollo-server": "^2.6.3",
-    "apollo-server-express": "^2.6.3",
     "graphql": "^14.3.1",
     "graphql-import": "^0.7.1",
     "node-sass": "^4.12.0",
     "prisma-client-lib": "^1.33.0",
     "react-router-dom": "^5.0.1"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -26,5 +25,11 @@
   "bugs": {
     "url": "https://github.com/cfpg/gql-school/issues"
   },
-  "homepage": "https://github.com/cfpg/gql-school#readme"
+  "homepage": "https://github.com/cfpg/gql-school#readme",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.2.0",
+    "@graphql-codegen/typescript": "1.2.0",
+    "@graphql-codegen/typescript-resolvers": "1.2.0",
+    "ts-node-dev": "^1.0.0-pre.40"
+  }
 }
