@@ -36,7 +36,7 @@ const Mutation: MutationResolvers = {
         id: args.where.id
       },
       data: {
-        students: { connect: [{ id: args.data.id }] }
+        students: { connect: [{ id: args.data.students.connect }] }
       }
     });
   }
