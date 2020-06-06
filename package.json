@@ -6,7 +6,7 @@
   "dependencies": {
     "antd": "^3.19.5",
     "apollo-server": "^2.6.3",
-    "apollo-server-express": "^2.6.3",
+    "apollo-server-express": "^2.14.2",
     "graphql": "^14.3.1",
     "graphql-import": "^0.7.1",
     "node-sass": "^4.12.0",
